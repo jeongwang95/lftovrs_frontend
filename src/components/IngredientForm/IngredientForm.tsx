@@ -21,13 +21,21 @@ interface IngredientFormProps {
 
 export const NewIngredientForm = (props:IngredientFormProps) => {
 
+    // used to make create request to the database
     const dispatch = useDispatch();
     const store = useStore();
-    const { register, control, handleSubmit } = useForm({});
 
+    // used for parsing csv file
     const [CSVData, setCSVData] = useState([]);
     let commonConfig = { delimiter: "," };
     let fileInput =  require('../../assets/top-1k-ingredients.csv');
+
+    // used for storing user's ingredient input from the add form
+    const [value, setValue] = React.useState('')
+    const [inputValue, setInputValue] = React.useState('')
+
+    // used to store ingredient amount data from the add form
+    const { register, handleSubmit } = useForm({});
 
     // convert csv file into json object
     const parseData = () => {
@@ -52,19 +60,19 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
     console.log(CSVData)
 
     const onSubmit = async (data:any, event:any) => {
-        console.log(data.name)
-        console.log(data.amount)
 
         // dispatch(chooseName(data.name));
         // dispatch(chooseAmount(data.amount));
 
         let id;
         CSVData.forEach(element => {
-            if(element['ingredient'] == data.name) {
+            if(element['ingredient'] == value) {
                 id = element['id']
             }
         })
 
+        console.log(value)
+        console.log(data.amount)
         console.log(id)
         // dispatch(chooseCategory(category))
         // await serverCalls.create(store.getState())
@@ -77,12 +85,16 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
                 <div>
                     <label htmlFor="name">Name of Ingredient</label>
                     <Autocomplete
+                        value={value}
                         disablePortal
-                        id="ingredient-name"
+                        onChange={(_, data) => setValue(data)}
+                        inputValue={inputValue}
+                        onInputChange={(_, data) => setInputValue(data)}
                         options={CSVData.map((option: any) => option.ingredient)}
                         sx={{ width: 300 }}
                         renderInput={(params) => <TextField {...params} label="Enter ingredient name" />}
                     />
+
                 </div>
                 <div>
                     <label htmlFor="amount">Amount</label>
