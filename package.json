@@ -22,6 +22,7 @@
     "@types/react-router-dom": "^5.3.3",
     "csv-parser": "^3.0.0",
     "firebase": "^9.17.1",
+    "papaparse": "^5.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fire": "^1.1.2",
@@ -57,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/papaparse": "^5.3.7"
   }
 }

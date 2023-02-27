@@ -40,7 +40,6 @@ baby bok choy,93636
 baby carrots,11960
 baby corn,10011168
 baby spinach leaves,11457
-baby-back ribs,10010204
 baby-back ribs,10192
 bacon,10123
 bacon fat,4609
@@ -63,7 +62,7 @@ beef chuck roast,13786
 beef stock,6170
 beef tenderloin,13926
 beer,14003
-beer,14006
+lite beer,14006
 beets,11080
 bell pepper,10211821
 berries,1009054
@@ -372,7 +371,7 @@ garbanzo bean flour,16157
 garlic,11215
 garlic paste,10111215
 garlic powder,1022020
-garlic powder,2020
+dried garlic,2020
 garlic salt,1062047
 gelatin,19177
 gf chocolate cake mix,99040
@@ -416,7 +415,7 @@ ground ancho chili,1022009
 ground beef,10023572
 ground chicken,5332
 ground chipotle chile pepper,1052009
-ground cinnamon,1012010
+ground canela,1012010
 ground cinnamon,2010
 ground cloves,2011
 ground coriander seeds,1002013
@@ -514,8 +513,8 @@ liquor,14037
 live lobster,15147
 long-grain rice,10220444
 low fat buttermilk,1088
-low fat milk,1082
-low fat milk,1174
+low fat milk 1%,1082
+low fat milk 2%,1174
 low fat plain yogurt,1117
 low fat ricotta cheese,1037
 low fat sour cream,1179
@@ -545,7 +544,7 @@ mascarpone,93820
 mat beans,99144
 matcha tea,98932
 mayonnaise,4025
-meat,1015006
+chicken meat,1015006
 meat,1065062
 meatballs,10110219
 medjool dates,9421
@@ -804,8 +803,8 @@ shallot,11677
 sharp cheddar cheese,1031009
 sheeps milk cheese,1011019
 shells,11020420
-sherry,10114106
-sherry,10214106
+dry sherry,10114106
+sherry wine,10214106
 sherry vinegar,1012068
 shiitake mushroom caps,11238
 short grain rice,10120052
@@ -818,8 +817,8 @@ shredded cheddar cheese,1001009
 shredded cheese,1011026
 shredded chicken,1005114
 shredded coconut,12108
-shredded mexican cheese blend,1001251
-shredded mexican cheese blend,1251
+mexican style shredded cheese,1001251
+mexican cheese,1251
 shredded mozzarella,1001026
 silken tofu,16161
 sirloin steak,23625

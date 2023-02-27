@@ -16,7 +16,7 @@ import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import logo from '../../assets/images/lftovrs_dark.png';
-import { DataTable } from '../../components';
+import { DataTable, NewIngredientForm } from '../../components';
 
 //Styling:
 
@@ -85,12 +85,11 @@ export const Dashboard = () => {
                 <Dialog open={dialogOpen} onClose={handleDialogClickClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Add New Ingredient</DialogTitle>
                     <DialogContent>
-                        {/* <NewIngredientForm /> */}
+                        <NewIngredientForm />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick = {handleDialogClickClose} color="primary">Cancel</Button>
                     </DialogActions>
-
                 </Dialog>
             </Box>
 
