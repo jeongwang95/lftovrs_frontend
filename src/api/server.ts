@@ -65,3 +65,18 @@ export const getRecipes = async (ingredients: string) => {
 
     return await response.json()
 }
+
+export const getIngredientCategory = async (id: string) => {
+    const response = await fetch(`https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=684d49ed37d146bcbf3c03e3359161de`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok){
+        throw new Error('Failed to fetch data from server')
+    }
+
+    return await response.json()
+}

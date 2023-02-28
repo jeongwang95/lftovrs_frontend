@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useStore } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -10,9 +10,8 @@ import { chooseName,
         chooseCategory,
         chooseAmount } from '../../redux/slices/rootSlice';
 import { Input } from '../sharedComponents/Input';
-import { serverCalls } from '../../api';
-import { useGetData } from '../../custom-hooks';
-import { parse } from 'path';
+import { serverCalls, getIngredientCategory } from '../../api';
+
 
 interface IngredientFormProps {
     id?:string;
@@ -35,7 +34,7 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
     const [inputValue, setInputValue] = React.useState('')
 
     // used to store ingredient amount data from the add form
-    const { register, handleSubmit } = useForm({});
+    const { register, handleSubmit } = useForm({defaultValues: {amount: ''}});
 
     // convert csv file into json object
     const parseData = () => {
@@ -57,26 +56,29 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
         parseData();
     },[]);
 
-    console.log(CSVData)
+    // console.log(CSVData)
 
     const onSubmit = async (data:any, event:any) => {
 
-        // dispatch(chooseName(data.name));
-        // dispatch(chooseAmount(data.amount));
-
-        let id;
+        let id = '';
         CSVData.forEach(element => {
             if(element['ingredient'] == value) {
                 id = element['id']
             }
         })
 
-        console.log(value)
-        console.log(data.amount)
-        console.log(id)
-        // dispatch(chooseCategory(category))
-        // await serverCalls.create(store.getState())
-        // window.location.reload()
+        const result = await getIngredientCategory(id)
+
+        // console.log(result.aisle.toLowerCase())
+        // console.log(value)
+        // console.log(data.amount)
+        // console.log(id)
+
+        dispatch(chooseName(value)); // ingredient name
+        dispatch(chooseCategory(result.aisle.toLowerCase())); // ingredient category
+        dispatch(chooseAmount(data.amount)); // ingredient amount
+        await serverCalls.create(store.getState())
+        window.location.reload()
     }
 
     return (
@@ -92,13 +94,13 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
                         onInputChange={(_, data) => setInputValue(data)}
                         options={CSVData.map((option: any) => option.ingredient)}
                         sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Enter ingredient name" />}
+                        renderInput={(params) => <TextField {...params} label="Enter Ingredient Name" />}
                     />
 
                 </div>
                 <div>
                     <label htmlFor="amount">Amount</label>
-                    <Input {...register('amount')} name="amount" placeholder="Enter the amount of ingredient or leave it blank"/>
+                    <Input {...register('amount')} name="amount" placeholder="Can Leave it Blank"/>
                 </div>
                 <Button type='submit'>Submit</Button>
             </form>
