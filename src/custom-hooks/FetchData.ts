@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { serverCalls, getRecipes } from '../api';
+import { serverCalls, getRecipesByIngredients } from '../api';
 
 export const useGetData = () => {
     const [ingredientData, setData] = useState<any>([]);
@@ -22,7 +22,7 @@ export const useGetRecipeData = (ingredients: string) => {
     const [recipeData, setData] = useState<any>([]);
 
     async function handleDataFetch(){
-        const result = await getRecipes(ingredients)
+        const result = await getRecipesByIngredients(ingredients)
         setData(result)
     }
 

@@ -10,7 +10,7 @@ import { chooseName,
         chooseCategory,
         chooseAmount } from '../../redux/slices/rootSlice';
 import { Input } from '../sharedComponents/Input';
-import { serverCalls, getIngredientCategory } from '../../api';
+import { serverCalls, getIngredientCategoryById } from '../../api';
 import { useGetData } from '../../custom-hooks';
 
 
@@ -66,7 +66,7 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
             }
         })
 
-        const result = await getIngredientCategory(id)
+        const result = await getIngredientCategoryById(id)
 
         dispatch(chooseName(value)); // ingredient name
         dispatch(chooseCategory(result.aisle.toLowerCase())); // ingredient category

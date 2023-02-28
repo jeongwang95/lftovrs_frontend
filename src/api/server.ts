@@ -51,7 +51,16 @@ export const serverCalls = {
     }
 }
 
-const recipes: Map<string, Promise<any>> = new Map();
+// cache recipes
+const recipesMap: Map<string, Promise<any>> = new Map();
+
+export const getRecipesByIngredients = (ingredients: string) => {
+    if (!recipesMap.has(ingredients)) {
+        recipesMap.set(ingredients, getRecipes(ingredients));
+    } else {
+        return recipesMap.get(ingredients)
+    }
+}
 
 export const getRecipes = async (ingredients: string) => {
     const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=100&ranking=2`,{
@@ -68,6 +77,17 @@ export const getRecipes = async (ingredients: string) => {
     return await response.json()
 }
 
+// cache url links of recipes
+const recipeURLMap: Map<string, Promise<any>> = new Map();
+
+export const getRecipeURLById = (id: string) => {
+    if (!recipeURLMap.has(id)) {
+        recipeURLMap.set(id, getRecipeURL(id));
+    } else {
+        return recipeURLMap.get(id)
+    }
+}
+
 export const getRecipeURL = async (id: string) => {
     const response = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&includeNutrition=false`,{
         method: 'GET',
@@ -81,6 +101,17 @@ export const getRecipeURL = async (id: string) => {
     }
 
     return await response.json()
+}
+
+// cache ingredient category
+const categoryMap: Map<string, Promise<any>> = new Map();
+
+export const getIngredientCategoryById = (id: string) => {
+    if (!categoryMap.has(id)) {
+        categoryMap.set(id, getIngredientCategory(id));
+    } else {
+        return categoryMap.get(id)
+    }
 }
 
 export const getIngredientCategory = async (id: string) => {

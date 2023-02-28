@@ -16,7 +16,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useGetData, useGetRecipeData } from '../../custom-hooks';
 import logo from '../../assets/images/lftovrs_dark.png';
-import { getRecipeURL } from '../../api';
+import { getRecipeURLById } from '../../api';
 
 
 
@@ -130,7 +130,7 @@ export const Browse = () => {
     // let recipies = [];
     // recipeData.forEach((element:any) => {
     //     if (element.usedIngredientCount > 0) {
-    //         let response = getRecipeURL(element.id)
+    //         let response = getRecipeURLById(element.id)
     //         console.log(response)
     //     }
     // })

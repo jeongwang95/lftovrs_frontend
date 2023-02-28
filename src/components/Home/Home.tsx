@@ -95,7 +95,6 @@ let size = dishes.length
 let x = Math.floor(size*Math.random())
 
 export const Home = ( props:Props) => {
-    console.log(process.env.REACT_APP_SPOONACULAR_API_KEY)
     return (
         <Root>
             <Hero>
