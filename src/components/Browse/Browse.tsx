@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import * as React from 'react';
 import {
     AppBar,
     Toolbar,
@@ -9,14 +9,13 @@ import {
     DialogActions, 
     DialogContent, 
     DialogContentText, 
-    DialogTitle 
+    DialogTitle
 } from "@mui/material";
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import logo from '../../assets/images/lftovrs_dark.png';
-import { DataTable, NewIngredientForm } from '../../components';
 
 //Styling:
 
@@ -45,18 +44,7 @@ const FooterLogo = styled("img")({
 })
 // End of Styling
 
-export const Dashboard = () => {
-    const [dialogOpen, setDialogOpen] = useState(false);
-
-    // Handle Dialog Open/Close
-    const handleDialogClickOpen = () => {
-        setDialogOpen(true);
-    }
-
-    const handleDialogClickClose = () => {
-        setDialogOpen(false);
-    }
-
+export const Browse = () => {
     return (
         <Box>
             <AppBar sx={{height: '5.5rem'}} position="static" color="secondary">
@@ -72,28 +60,11 @@ export const Dashboard = () => {
                         <NavLogo src={`${logo}`} alt='logo' />    
                     </IconButton>
                     <Box>
-                        <Button sx={{marginRight:'2rem'}} color="inherit" component={Link} to='/browse'>Browse</Button>
+                        <Button sx={{marginRight:'2rem'}} color="inherit" component={Link} to='/dashboard'>My Ingredients</Button>
                         <Button sx={{marginRight:'2rem'}} color="primary" variant="contained" component={Link} to='/signout'>Sign Out</Button>
                     </Box>
                 </Toolbar>
             </AppBar>
-
-            <Box sx={{height: '50rem', margin: '5rem'}}>
-                <h1>My Ingredients</h1>
-                <Button onClick={handleDialogClickOpen}>Add</Button>
-
-                <Dialog open={dialogOpen} onClose={handleDialogClickClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Add New Ingredient</DialogTitle>
-                    <DialogContent>
-                        <NewIngredientForm />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick = {handleDialogClickClose} color="primary">Cancel</Button>
-                    </DialogActions>
-                </Dialog>
-                
-                <DataTable />
-            </Box>
 
             <FooterContainer>
                 <FooterLogo src={`${logo}`} alt='logo' />
@@ -110,6 +81,5 @@ export const Dashboard = () => {
                 </div>
             </FooterContainer>
         </Box>
-        
-    )
+    );
 }

@@ -11,6 +11,7 @@ import { chooseName,
         chooseAmount } from '../../redux/slices/rootSlice';
 import { Input } from '../sharedComponents/Input';
 import { serverCalls, getIngredientCategory } from '../../api';
+import { useGetData } from '../../custom-hooks';
 
 
 interface IngredientFormProps {
@@ -56,8 +57,6 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
         parseData();
     },[]);
 
-    // console.log(CSVData)
-
     const onSubmit = async (data:any, event:any) => {
 
         let id = '';
@@ -68,11 +67,6 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
         })
 
         const result = await getIngredientCategory(id)
-
-        // console.log(result.aisle.toLowerCase())
-        // console.log(value)
-        // console.log(data.amount)
-        // console.log(id)
 
         dispatch(chooseName(value)); // ingredient name
         dispatch(chooseCategory(result.aisle.toLowerCase())); // ingredient category
@@ -100,7 +94,7 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
                 </div>
                 <div>
                     <label htmlFor="amount">Amount</label>
-                    <Input {...register('amount')} name="amount" placeholder="Can Leave it Blank"/>
+                    <Input {...register('amount')} name="amount" placeholder="Can Leave It Blank"/>
                 </div>
                 <Button type='submit'>Submit</Button>
             </form>
@@ -109,13 +103,23 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
 }
 
 export const UpdateIngredientForm = (props:IngredientFormProps) => {
-    const { register, handleSubmit } = useForm({ })
+    const { register, handleSubmit } = useForm({defaultValues: {amount: ''}})
+    let { ingredientData, getData } = useGetData();
 
+    // props.id returns the name of the ingredient, so we need to iterate through ingredients data to get the ingredient id.
+    // the users can only update the amount of an ingredient so the variable: data only has one key: "amount".
+    // so we need to update data by adding two keys: "name" and "category"
     const onSubmit = async (data:any, event:any) => {
-        console.log(props.id)
-
-        await serverCalls.update(props.id!, data)
-        console.log(`Updated:${data} ${props.id}`)
+        let id = '';
+        
+        ingredientData.forEach((element:any) => {
+            if (element.name == props.id) {
+                data['name'] = props.id;
+                data['category'] = element.category
+                id = element.id
+            }
+        })
+        await serverCalls.update(id, data)
         window.location.reload()
         event.target.reset();
 
@@ -125,8 +129,8 @@ export const UpdateIngredientForm = (props:IngredientFormProps) => {
         <div>
             <form onSubmit = {handleSubmit(onSubmit)}>
                 <div>
-                    <label htmlFor="amount">Amount</label>
-                    <Input {...register('amount')} name="amount" placeholder="Enter the amount of ingredient or leave it blank"/>
+                    <label htmlFor="amount">Change the Amount</label>
+                    <Input {...register('amount')} name="amount" placeholder="Can Leave It Blank"/>
                 </div>
                 <Button type='submit'>Submit</Button>
             </form>

@@ -1,54 +1,117 @@
-import React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import React, {useState} from 'react';
+import { DataGrid, GridColDef, GridSelectionModel, GridToolbarFilterButton } from '@mui/x-data-grid';
+import { serverCalls } from '../../api';
+import { useGetData, useGetRecipeData } from '../../custom-hooks';
+import { Button,Dialog,
+        DialogActions,
+        DialogContent,
+        DialogTitle } from '@mui/material'; 
+import { UpdateIngredientForm } from '../../components/IngredientForm';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-        field: 'firstName',
-        headerName: 'First name',
-        width: 150,
-        editable: true,
+    { 
+        field: 'category', 
+        headerName: 'Category', 
+        width: 400,
+        editable: true 
     },
     {
-        field: 'lastName',
-        headerName: 'Last name',
-        width: 150,
-        editable: true,
+        field: 'name',
+        headerName: 'Name',
+        width: 400,
+        editable: true
     },
     {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 110,
-        editable: true,
-    },
-];
-
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+        field: 'amount',
+        headerName: 'Amount',
+        width: 400,
+        editable: true
+    }
 ];
 
 export const DataTable = () => {
+    let { ingredientData, getData } = useGetData();
+    let [open, setOpen] = useState(false);
+    let [error, setError] = useState(false);
+    let [rowData, setRowData] = useState<any>([]);
+    let [gridData, setData] = useState<GridSelectionModel>([])
+    let [pageSize, setPageSize] = React.useState<number>(10);
+
+    // if an ingredient isnt selected, show error message
+    let handleOpen = () => {
+        if (rowData.length > 0) {
+            setOpen(true)
+            console.log(rowData[0].name)
+        } else {
+            setError(true)
+        }
+    }
+
+    let handleClose = () => {
+        setOpen(false)
+        setError(false)
+    }
+
+    // if ingredient(s) isnt selected, show error message
+    // else delete ingredient(s)
+    let deleteData = async () => {
+        if (rowData.length > 0) {
+            rowData.forEach(async (ingredient: any) => {
+                await serverCalls.delete(ingredient.id);
+            })
+            await getData()
+            window.location.reload()
+        } else {
+            setError(true)
+        }
+        
+    }
+
     return (
         <div style={{ height: '30rem', width: 'inherit'}}>
-            <h2>My Ingredients</h2>
-            <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-            disableSelectionOnClick
+            <DataGrid 
+                    rows={ingredientData}
+                    getRowId={(row) => row.name}
+                    getRowHeight={() => 'auto'} 
+                    columns={columns} 
+                    pageSize={pageSize}
+                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowsPerPageOptions={[10, 20, 40]}
+                    pagination
+                    components={{ Toolbar: GridToolbarFilterButton }}
+                    checkboxSelection 
+                    onSelectionModelChange = {(ids) => {
+                        setData(ids);
+                        const selectedIDs = new Set(ids);
+                        const selectedRows = ingredientData.filter((row: any) =>
+                            selectedIDs.has(row.name)
+                        );
+                        setRowData(selectedRows)
+                    }}
+                    {...ingredientData}  
             />
 
+            <Button onClick={handleOpen}>Update</Button>
+            <Button variant="contained" onClick={deleteData}>Delete</Button>
+
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Update Ingredient: {gridData[0]}</DialogTitle>
+                <DialogContent>
+                    <UpdateIngredientForm id={`${gridData[0]}`}/>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick = {handleClose} color="primary">Cancel</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={error} onClose={handleClose} aria-labelledby="form-dialog-error">
+                <DialogActions>
+                    <CloseIcon onClick={handleClose} color="primary" />
+                </DialogActions>
+                <DialogTitle id="form-dialog-error">Please select an ingredient to make changes.</DialogTitle>
+            </Dialog>
         </div>
     );
 }

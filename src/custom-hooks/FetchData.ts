@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { serverCalls, getRecipes, getIngredientCategory } from '../api';
+import { serverCalls, getRecipes } from '../api';
 
 export const useGetData = () => {
     const [ingredientData, setData] = useState<any>([]);

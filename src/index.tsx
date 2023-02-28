@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { theme } from './Theme/themes';
-import { Home, Dashboard, SignIn } from './components';
+import { Home, Dashboard, SignIn, Browse } from './components';
 import reportWebVitals from './reportWebVitals';
 import './styles.css'
 
@@ -20,6 +20,7 @@ root.render(
               <Routes>
                 <Route path='/' element={<Home title  ={'lftovrs'}/>} />
                 <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/browse' element={<Browse />} />
                 <Route path='/signin' element={<SignIn />} />
               </Routes>
           </Router>
