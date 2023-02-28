@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import { DataGrid, GridColDef, GridSelectionModel, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { serverCalls } from '../../api';
-import { useGetData, useGetRecipeData } from '../../custom-hooks';
-import { Button,Dialog,
+import { useGetData} from '../../custom-hooks';
+import { Button,
+        Box,
+        Dialog,
         DialogActions,
         DialogContent,
         DialogTitle } from '@mui/material'; 
@@ -70,7 +72,7 @@ export const DataTable = () => {
     }
 
     return (
-        <div style={{ height: '30rem', width: 'inherit'}}>
+        <div style={{ height: '40rem', width: 'inherit'}}>
             <DataGrid 
                     rows={ingredientData}
                     getRowId={(row) => row.name}
@@ -93,8 +95,10 @@ export const DataTable = () => {
                     {...ingredientData}  
             />
 
-            <Button onClick={handleOpen}>Update</Button>
-            <Button variant="contained" onClick={deleteData}>Delete</Button>
+            <Box sx={{marginTop:"2.5rem", display:"flex", justifyContent:"flex-end"}}>
+                <Button sx={{marginRight:"1rem"}} variant="contained" onClick={handleOpen}>Update</Button>
+                <Button variant="contained" color="error" onClick={deleteData}>Delete</Button>
+            </Box>
 
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Update Ingredient: {gridData[0]}</DialogTitle>

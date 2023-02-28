@@ -30,5 +30,5 @@ export const useGetRecipeData = (ingredients: string) => {
         handleDataFetch();
     }, [])
 
-    return {recipeData, getData:handleDataFetch}
+    return {recipeData, getRecipeData:handleDataFetch}
 }

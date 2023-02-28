@@ -95,6 +95,7 @@ let size = dishes.length
 let x = Math.floor(size*Math.random())
 
 export const Home = ( props:Props) => {
+    console.log(process.env.REACT_APP_SPOONACULAR_API_KEY)
     return (
         <Root>
             <Hero>
@@ -149,7 +150,7 @@ export const Home = ( props:Props) => {
                     
                     <FooterContainer2>
                         <LinkedInIcon />
-                        <a className='contact' href='#'>LinkedIn</a>
+                        <a className='contact' href='https://www.linkedin.com/in/jeongwang/' target="_blank">LinkedIn</a>
                     </FooterContainer2>
                     
                 </div>

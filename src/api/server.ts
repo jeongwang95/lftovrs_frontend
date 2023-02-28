@@ -51,8 +51,25 @@ export const serverCalls = {
     }
 }
 
+const recipes: Map<string, Promise<any>> = new Map();
+
 export const getRecipes = async (ingredients: string) => {
-    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=684d49ed37d146bcbf3c03e3359161de&ingredients=${ingredients}&number=100&ranking=2`,{
+    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=100&ranking=2`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok){
+        throw new Error('Failed to fetch data from server')
+    }
+
+    return await response.json()
+}
+
+export const getRecipeURL = async (id: string) => {
+    const response = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&includeNutrition=false`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -67,7 +84,7 @@ export const getRecipes = async (ingredients: string) => {
 }
 
 export const getIngredientCategory = async (id: string) => {
-    const response = await fetch(`https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=684d49ed37d146bcbf3c03e3359161de`,{
+    const response = await fetch(`https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

@@ -25,6 +25,13 @@ const NavLogo = styled("img")({
     height: '2.5rem'
 })
 
+// Body Section
+const BodyHeader = styled("div")({
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '2.5rem'
+})
+
 // Footer Section
 const FooterContainer = styled("div")({
     backgroundColor: '#324E40',
@@ -78,9 +85,11 @@ export const Dashboard = () => {
                 </Toolbar>
             </AppBar>
 
-            <Box sx={{height: '50rem', margin: '5rem'}}>
-                <h1>My Ingredients</h1>
-                <Button onClick={handleDialogClickOpen}>Add</Button>
+            <Box sx={{height: '50rem', margin: '2.5rem 5rem 5rem 5rem'}}>
+                <BodyHeader>
+                    <h1>My Ingredients</h1>
+                    <Button onClick={handleDialogClickOpen} variant='contained'>Add</Button>
+                </BodyHeader>
 
                 <Dialog open={dialogOpen} onClose={handleDialogClickClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Add New Ingredient</DialogTitle>
@@ -91,7 +100,7 @@ export const Dashboard = () => {
                         <Button onClick = {handleDialogClickClose} color="primary">Cancel</Button>
                     </DialogActions>
                 </Dialog>
-                
+
                 <DataTable />
             </Box>
 
@@ -105,7 +114,7 @@ export const Dashboard = () => {
                     </FooterContainer2>
                     <FooterContainer2>
                         <LinkedInIcon />
-                        <a className='contact' href='#'>LinkedIn</a>
+                        <a className='contact' href='https://www.linkedin.com/in/jeongwang/' target="_blank">LinkedIn</a>
                     </FooterContainer2>       
                 </div>
             </FooterContainer>
