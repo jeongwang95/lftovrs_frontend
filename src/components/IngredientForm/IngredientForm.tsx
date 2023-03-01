@@ -87,7 +87,7 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
                         inputValue={inputValue}
                         onInputChange={(_, data) => setInputValue(data)}
                         options={CSVData.map((option: any) => option.ingredient)}
-                        sx={{ width: 300 }}
+                        sx={{ width: 300, marginTop: '.5rem', marginBottom: '1rem'}}
                         renderInput={(params) => <TextField {...params} label="Enter Ingredient Name" />}
                     />
 
@@ -96,7 +96,7 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
                     <label htmlFor="amount">Amount</label>
                     <Input {...register('amount')} name="amount" placeholder="Can Leave It Blank"/>
                 </div>
-                <Button type='submit'>Submit</Button>
+                <Button sx={{marginTop: '1rem'}} variant='contained' type='submit'>Add</Button>
             </form>
         </div>
     )
@@ -132,7 +132,7 @@ export const UpdateIngredientForm = (props:IngredientFormProps) => {
                     <label htmlFor="amount">Change the Amount</label>
                     <Input {...register('amount')} name="amount" placeholder="Can Leave It Blank"/>
                 </div>
-                <Button type='submit'>Submit</Button>
+                <Button sx={{marginTop: '1rem'}} variant='contained' type='submit'>Update</Button>
             </form>
         </div>
     )

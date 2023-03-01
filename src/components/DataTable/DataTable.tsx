@@ -72,7 +72,7 @@ export const DataTable = () => {
     }
 
     return (
-        <div style={{ height: '40rem', width: 'inherit'}}>
+        <div style={{ height: '35.7rem', width: 'inherit'}}>
             <DataGrid 
                     rows={ingredientData}
                     getRowId={(row) => row.name}

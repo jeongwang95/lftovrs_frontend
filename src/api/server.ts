@@ -1,8 +1,10 @@
-let token = `1`
+let token: any;
 
 // making requests to lftovrs database
 export const serverCalls = {
     get: async () => {
+        token = localStorage.getItem('token');
+        console.log(token)
         const response = await fetch(`https://gravel-billowy-ash.glitch.me/api/ingredients/${token}`,{
             method: 'GET',
             headers: {
@@ -52,11 +54,12 @@ export const serverCalls = {
 }
 
 // cache recipes
-const recipesMap: Map<string, Promise<any>> = new Map();
+const recipesMap: Map<string, any> = new Map();
 
-export const getRecipesByIngredients = (ingredients: string) => {
+export const getRecipesByIngredients = async (ingredients: string) => {
     if (!recipesMap.has(ingredients)) {
-        recipesMap.set(ingredients, getRecipes(ingredients));
+        recipesMap.set(ingredients, await getRecipes(ingredients));
+        return recipesMap.get(ingredients)
     } else {
         return recipesMap.get(ingredients)
     }
@@ -78,11 +81,12 @@ export const getRecipes = async (ingredients: string) => {
 }
 
 // cache url links of recipes
-const recipeURLMap: Map<string, Promise<any>> = new Map();
+const recipeURLMap: Map<string, any> = new Map();
 
-export const getRecipeURLById = (id: string) => {
+export const getRecipeURLById = async (id: string) => {
     if (!recipeURLMap.has(id)) {
-        recipeURLMap.set(id, getRecipeURL(id));
+        recipeURLMap.set(id, await getRecipeURL(id));
+        return recipeURLMap.get(id)
     } else {
         return recipeURLMap.get(id)
     }
@@ -109,6 +113,7 @@ const categoryMap: Map<string, Promise<any>> = new Map();
 export const getIngredientCategoryById = (id: string) => {
     if (!categoryMap.has(id)) {
         categoryMap.set(id, getIngredientCategory(id));
+        return categoryMap.get(id)
     } else {
         return categoryMap.get(id)
     }

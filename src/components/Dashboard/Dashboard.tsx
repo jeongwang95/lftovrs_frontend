@@ -11,10 +11,11 @@ import {
     DialogContentText, 
     DialogTitle 
 } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { getAuth, signOut } from 'firebase/auth';
 import logo from '../../assets/images/lftovrs_dark.png';
 import { DataTable, NewIngredientForm } from '../../components';
 
@@ -52,8 +53,13 @@ const FooterLogo = styled("img")({
 })
 // End of Styling
 
+export const cache:any = {};
+
 export const Dashboard = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
+    const auth = getAuth();
+    const navigate = useNavigate();
+
 
     // Handle Dialog Open/Close
     const handleDialogClickOpen = () => {
@@ -63,6 +69,13 @@ export const Dashboard = () => {
     const handleDialogClickClose = () => {
         setDialogOpen(false);
     }
+
+    const logOut = async () => {
+        await signOut(auth);
+        navigate('/');
+    }
+
+    console.log(cache)
 
     return (
         <Box>
@@ -80,12 +93,12 @@ export const Dashboard = () => {
                     </IconButton>
                     <Box>
                         <Button sx={{marginRight:'2rem'}} color="inherit" component={Link} to='/browse'>Browse</Button>
-                        <Button sx={{marginRight:'2rem'}} color="primary" variant="contained" component={Link} to='/signout'>Sign Out</Button>
+                        <Button sx={{marginRight:'2rem'}} color="primary" variant="contained" onClick={logOut}>Sign Out</Button>
                     </Box>
                 </Toolbar>
             </AppBar>
 
-            <Box sx={{height: '50rem', margin: '2.5rem 5rem 5rem 5rem'}}>
+            <Box sx={{height: '45rem', margin: '2.5rem 5rem 5rem 5rem'}}>
                 <BodyHeader>
                     <h1>My Ingredients</h1>
                     <Button onClick={handleDialogClickOpen} variant='contained'>Add</Button>

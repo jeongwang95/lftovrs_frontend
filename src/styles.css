@@ -45,6 +45,13 @@ p{
     line-height: 2;
 }
 
+.signup {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 .5rem .01rem lightgray;
+}
+
 /* Home Page: body section */
 #main{
     margin-top: 5rem;
@@ -67,4 +74,57 @@ p{
 
 .body-text-steps{
     font-weight: normal;
+}
+
+/* Sign In Page */
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: clip;
+
+}
+/* Control the left side */
+.left {
+    left: 0;
+    background-color: #ECEFEE;
+
+}
+
+/* Control the right side */
+.right {
+    right: 0;
+
+}
+
+/* content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centered h1, .centered p{
+    text-align: center;
+}
+
+.centered img {
+    height: 100vh;
+    width: 50vw;
+}
+
+.create-acc {
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Sign In/Sign Up */
+.error {
+    color: red;
+    text-align: center;
 }

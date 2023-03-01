@@ -10,10 +10,11 @@ import {
     IconButton
 } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { getAuth, signOut } from 'firebase/auth';
 import { useGetData, useGetRecipeData } from '../../custom-hooks';
 import logo from '../../assets/images/lftovrs_dark.png';
 import { getRecipeURLById } from '../../api';
@@ -113,6 +114,8 @@ const itemData = [
 let subtitle = 'hello'
 
 export const Browse = () => {
+    const navigate = useNavigate();
+    const auth = getAuth();
     let { ingredientData, getData } = useGetData();
     let ingredients = '';
     
@@ -135,6 +138,10 @@ export const Browse = () => {
     //     }
     // })
 
+    const logOut = async () => {
+        await signOut(auth);
+        navigate('/');
+    }
 
     return (
         <Box>
@@ -152,7 +159,7 @@ export const Browse = () => {
                     </IconButton>
                     <Box>
                         <Button sx={{marginRight:'2rem'}} color="inherit" component={Link} to='/dashboard'>My Ingredients</Button>
-                        <Button sx={{marginRight:'2rem'}} color="primary" variant="contained" component={Link} to='/signout'>Sign Out</Button>
+                        <Button sx={{marginRight:'2rem'}} color="primary" variant="contained" onClick={logOut}>Sign Out</Button>
                     </Box>
                 </Toolbar>
             </AppBar>

@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
+import { FirebaseAppProvider } from 'reactfire';
+import 'firebase/auth'
+import { firebaseConfig } from './firebaseConfig';
 import { store } from './redux/store';
 import { theme } from './Theme/themes';
 import { Home, Dashboard, SignIn, Browse } from './components';
@@ -14,18 +17,20 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store = {store}>
-      <ThemeProvider theme={theme}>
-          <Router>
-              <Routes>
-                <Route path='/' element={<Home title  ={'lftovrs'}/>} />
-                <Route path='/dashboard' element={<Dashboard />} />
-                <Route path='/browse' element={<Browse />} />
-                <Route path='/signin' element={<SignIn />} />
-              </Routes>
-          </Router>
-      </ThemeProvider>
-    </Provider>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+      <Provider store = {store}>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <Routes>
+                  <Route path='/' element={<Home title  ={'lftovrs'}/>} />
+                  <Route path='/dashboard' element={<Dashboard />} />
+                  <Route path='/browse' element={<Browse />} />
+                  <Route path='/signin' element={<SignIn />} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
+      </Provider>
+    </FirebaseAppProvider>
   </React.StrictMode>
 );
 

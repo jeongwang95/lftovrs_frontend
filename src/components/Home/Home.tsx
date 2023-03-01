@@ -14,6 +14,7 @@ import dish2 from '../../assets/images/dish2.png';
 import dish3 from '../../assets/images/dish3.png';
 import dish4 from '../../assets/images/dish4.png';
 import dish5 from '../../assets/images/dish5.png';
+import { SignUpForm } from '../../components';
 
 interface Props{
     title: string;
@@ -114,7 +115,10 @@ export const Home = ( props:Props) => {
                         </HeroContainer2>
                     </HeroBody>
 
-                    <img src={`${filler}`} alt="Sign Up Form Filler" height="500" />
+                    <div className='signup'>
+                        <h1 style={{textAlign: 'center', marginBottom:'2rem'}}>Create an Account Today!</h1>
+                        <SignUpForm />
+                    </div>
                 </HeroContainer>
             </Hero>
 
