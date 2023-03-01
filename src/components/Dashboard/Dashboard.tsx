@@ -53,8 +53,6 @@ const FooterLogo = styled("img")({
 })
 // End of Styling
 
-export const cache:any = {};
-
 export const Dashboard = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const auth = getAuth();
@@ -74,8 +72,6 @@ export const Dashboard = () => {
         await signOut(auth);
         navigate('/');
     }
-
-    console.log(cache)
 
     return (
         <Box>

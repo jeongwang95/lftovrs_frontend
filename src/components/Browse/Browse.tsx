@@ -15,9 +15,8 @@ import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { getAuth, signOut } from 'firebase/auth';
-import { useGetData, useGetRecipeData } from '../../custom-hooks';
+import { useGetData } from '../../custom-hooks';
 import logo from '../../assets/images/lftovrs_dark.png';
-import { getRecipeURLById } from '../../api';
 
 
 
@@ -127,8 +126,7 @@ export const Browse = () => {
     console.log(ingredients)
     
     // the string "ingredients" will be used as a parameter for spoonacular get recipes by ingredients API call
-    let {recipeData, getRecipeData} = useGetRecipeData(ingredients);
-    console.log(recipeData)
+    
 
     // let recipies = [];
     // recipeData.forEach((element:any) => {
