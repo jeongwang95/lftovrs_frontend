@@ -46,6 +46,7 @@ export const SignInForm = (props: userProps) => {
                     console.log(user.uid)
                     localStorage.setItem('token',user.uid)
                     navigate('/dashboard');
+                    window.location.reload()
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -102,6 +103,7 @@ export const SignUpForm = (props: userProps) => {
                     console.log(user.uid)
                     localStorage.setItem('token',user.uid)
                     navigate('/dashboard');
+                    window.location.reload()
                 })
                 .catch((error) => {
                     const errorCode = error.code;

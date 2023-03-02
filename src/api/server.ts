@@ -42,6 +42,8 @@ export const serverCalls = {
             },
             body: JSON.stringify(data)
         });
+
+        return await response.json()
     },
     delete: async(id:string) => {
         const response = await fetch(`https://gravel-billowy-ash.glitch.me/api/ingredients/${token}/${id}`,{
@@ -50,26 +52,13 @@ export const serverCalls = {
                 'Content-Type': 'application/json',
             }
         })
+
+        return await response.json()
     }
 }
 
 export const getRecipes = async (ingredients: string) => {
-    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=100&ranking=2`,{
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
-
-    if (!response.ok){
-        throw new Error('Failed to fetch data from server')
-    }
-
-    return await response.json()
-}
-
-export const getRecipeURL = async (id: string) => {
-    const response = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&includeNutrition=false`,{
+    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${ingredients}&number=100&ranking=2&ignorePantry=true`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

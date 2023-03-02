@@ -21,6 +21,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { getAuth, signOut } from 'firebase/auth';
 import logo from '../../assets/images/lftovrs_dark.png';
 import { DataTable, NewIngredientForm } from '../../components';
+import { store } from '../../redux/store';
 
 //Styling:
 
@@ -56,34 +57,13 @@ const FooterLogo = styled("img")({
 })
 // End of Styling
 
-const itemData = [
-    {
-        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-        title: 'Breakfast',
-        author: '@bkristastucchio',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-        title: 'Burger',
-        author: '@rollelflex_graphy726',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-        title: 'Camera',
-        author: '@helloimnik',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-        author: '@nolanissac',
-    }
-];
+
+let recipes = JSON.parse(localStorage.getItem(localStorage.getItem('token') || '') || '[]').slice(0,4);
 
 export const Dashboard = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const auth = getAuth();
     const navigate = useNavigate();
-
 
     // Handle Dialog Open/Close
     const handleDialogClickOpen = () => {
@@ -98,6 +78,8 @@ export const Dashboard = () => {
         await signOut(auth);
         navigate('/');
     }
+
+    console.log(recipes)
 
     return (
         <Box>
@@ -141,7 +123,7 @@ export const Dashboard = () => {
                 <Box sx={{marginTop: '5rem'}}>
                     <h1>Quick Picks</h1>
                     <ImageList sx={{ width: 'inherit', marginTop: '2rem' }} cols={4}>
-                        {itemData.map((item:any) => (
+                        {recipes.map((item:any) => (
                             <ImageListItem key={item.img}>
                             <img
                                 src={`${item.img}?w=450&h=450&fit=crop&auto=format`}
@@ -151,10 +133,10 @@ export const Dashboard = () => {
                             />
                             <ImageListItemBar
                                 title={item.title}
-                                subtitle={`hello`}
+                                subtitle={`used: ${item.used}, missing: ${item.missed}`}
                                 actionIcon={
                                     <IconButton
-                                        onClick={()=> window.open('https://stackoverflow.com/')}
+                                        onClick={()=> window.open(`${item.url}`)}
                                         sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                         aria-label={`info about ${item.title}`}
                                     >
