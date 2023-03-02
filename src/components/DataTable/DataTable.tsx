@@ -65,40 +65,45 @@ export const DataTable = () => {
     // else delete ingredient(s)
     let deleteData = async () => {
         if (rowData.length > 0) {
-            rowData.forEach(async (ingredient: any) => {
+            await rowData.forEach(async (ingredient: any) => {
                 await serverCalls.delete(ingredient.id);
             })
             await getData()
 
-            // once the list of ingredients are updated, we will make a get request to spoonacular API to retrieve the recipes that can be made from our ingredients
-            // then we store the response in our store so the "Browse" page doesn't need to make another request to spoonacular API
-
-            // from user's ingredient list database, get all of user's ingredient names and put it into a string
-            let ingredients = '';
-            ingredientData.forEach((element:any) => {
-                ingredients += ',+' + element.name
-            })
-            ingredients = ingredients.replaceAll(' ', '-').substring(2);
-
-            let response = await getRecipes(ingredients)
-
-            // filter recipes that has 0 ingredient matches and exclude recipes where missed ingredient count is greater than used ingredient count
-            // then make an object of datas we are going to use then add the object to "recipeInfo" array
             let recipeInfo:any = [];
-            await response.forEach((element:any) => {
-                if (element.usedIngredientCount > 0 && element.usedIngredientCount > element.missedIngredientCount) {
-                    let title = element.title.replaceAll(' ', '-');
-                    title = title.toLowerCase()
-                    let recipe = {
-                        'img': element.image,
-                        'title': element.title,
-                        'used': element.usedIngredientCount,
-                        'missed': element.missedIngredientCount,
-                        'url': `https://spoonacular.com/${title}-${element.id}`
+
+            console.log(ingredientData)
+            if (ingredientData.length > 0) {
+                console.log('this hit')
+                // once the list of ingredients are updated, we will make a get request to spoonacular API to retrieve the recipes that can be made from our ingredients
+                // then we store the response in our store so the "Browse" page doesn't need to make another request to spoonacular API
+
+                // from user's ingredient list database, get all of user's ingredient names and put it into a string
+                let ingredients = '';
+                ingredientData.forEach((element:any) => {
+                    ingredients += ',+' + element.name
+                })
+                ingredients = ingredients.replaceAll(' ', '-').substring(2);
+
+                let response = await getRecipes(ingredients)
+
+                // filter recipes that has 0 ingredient matches and exclude recipes where missed ingredient count is greater than used ingredient count
+                // then make an object of datas we are going to use then add the object to "recipeInfo" array
+                await response.forEach((element:any) => {
+                    if (element.usedIngredientCount > 0 && element.usedIngredientCount > element.missedIngredientCount) {
+                        let title = element.title.replaceAll(' ', '-');
+                        title = title.toLowerCase()
+                        let recipe = {
+                            'img': element.image,
+                            'title': element.title,
+                            'used': element.usedIngredientCount,
+                            'missed': element.missedIngredientCount,
+                            'url': `https://spoonacular.com/${title}-${element.id}`
+                        }
+                        recipeInfo.push(recipe)
                     }
-                    recipeInfo.push(recipe)
-                }
-            })
+                })
+            } 
 
             localStorage.setItem(localStorage.getItem('token') || '', JSON.stringify(recipeInfo))
             dispatch(chooseRecipes(recipeInfo))

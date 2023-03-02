@@ -102,7 +102,7 @@ export const Dashboard = () => {
                 </Toolbar>
             </AppBar>
 
-            <Box sx={{height: '80rem', margin: '2.5rem 5rem 5rem 5rem'}}>
+            <Box sx={{height: '70rem', margin: '2.5rem 5rem 5rem 5rem'}}>
                 <BodyHeader>
                     <h1>My Ingredients</h1>
                     <Button onClick={handleDialogClickOpen} variant='contained'>Add</Button>
