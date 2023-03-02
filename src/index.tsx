@@ -10,7 +10,8 @@ import { store } from './redux/store';
 import { theme } from './Theme/themes';
 import { Home, Dashboard, SignIn, Browse } from './components';
 import reportWebVitals from './reportWebVitals';
-import './styles.css'
+import './styles.css';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
