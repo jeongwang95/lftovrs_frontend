@@ -8,9 +8,12 @@ import {
     Dialog, 
     DialogActions, 
     DialogContent, 
-    DialogContentText, 
-    DialogTitle 
+    DialogTitle,
+    ImageList,
+    ImageListItem,
+    ImageListItemBar,
 } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate, Link } from 'react-router-dom';
 import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
@@ -53,6 +56,29 @@ const FooterLogo = styled("img")({
 })
 // End of Styling
 
+const itemData = [
+    {
+        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+        title: 'Breakfast',
+        author: '@bkristastucchio',
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
+        title: 'Burger',
+        author: '@rollelflex_graphy726',
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
+        title: 'Camera',
+        author: '@helloimnik',
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        title: 'Coffee',
+        author: '@nolanissac',
+    }
+];
+
 export const Dashboard = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const auth = getAuth();
@@ -94,7 +120,7 @@ export const Dashboard = () => {
                 </Toolbar>
             </AppBar>
 
-            <Box sx={{height: '45rem', margin: '2.5rem 5rem 5rem 5rem'}}>
+            <Box sx={{height: '80rem', margin: '2.5rem 5rem 5rem 5rem'}}>
                 <BodyHeader>
                     <h1>My Ingredients</h1>
                     <Button onClick={handleDialogClickOpen} variant='contained'>Add</Button>
@@ -111,6 +137,35 @@ export const Dashboard = () => {
                 </Dialog>
 
                 <DataTable />
+
+                <Box sx={{marginTop: '5rem'}}>
+                    <h1>Quick Picks</h1>
+                    <ImageList sx={{ width: 'inherit', marginTop: '2rem' }} cols={4}>
+                        {itemData.map((item:any) => (
+                            <ImageListItem key={item.img}>
+                            <img
+                                src={`${item.img}?w=450&h=450&fit=crop&auto=format`}
+                                srcSet={`${item.img}?w=450&h=450&fit=crop&auto=format&dpr=2 3x`}
+                                alt={item.title}
+                                loading="lazy"
+                            />
+                            <ImageListItemBar
+                                title={item.title}
+                                subtitle={`hello`}
+                                actionIcon={
+                                    <IconButton
+                                        onClick={()=> window.open('https://stackoverflow.com/')}
+                                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                        aria-label={`info about ${item.title}`}
+                                    >
+                                        <InfoIcon />
+                                    </IconButton>
+                                }
+                            />
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
+                </Box>
             </Box>
 
             <FooterContainer>

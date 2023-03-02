@@ -97,7 +97,7 @@ export const DataTable = () => {
 
             <Box sx={{marginTop:"2.5rem", display:"flex", justifyContent:"flex-end"}}>
                 <Button sx={{marginRight:"1rem"}} variant="contained" onClick={handleOpen}>Update</Button>
-                <Button variant="contained" color="error" onClick={deleteData}>Delete</Button>
+                <Button variant="contained" color="error" onClick={deleteData}>Remove</Button>
             </Box>
 
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

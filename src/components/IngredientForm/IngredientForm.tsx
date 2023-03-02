@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Papa from 'papaparse';
 
-import { chooseName,
-        chooseCategory,
-        chooseAmount } from '../../redux/slices/rootSlice';
+import {chooseApi1, chooseApi2 } from '../../redux/slices/rootSlice';
 import { Input } from '../sharedComponents/Input';
-import { serverCalls, getIngredientCategory } from '../../api';
+import { serverCalls, getIngredientCategory, getRecipes, getRecipeURL } from '../../api';
 import { useGetData } from '../../custom-hooks';
-
+import { store } from '../../redux/store';
 
 interface IngredientFormProps {
     id?:string;
@@ -23,7 +21,10 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
 
     // used to make create request to the database
     const dispatch = useDispatch();
-    const store = useStore();
+
+    let { ingredientData, getData } = useGetData();
+    let ingredients = '';
+    
 
     // used for parsing csv file
     const [CSVData, setCSVData] = useState([]);
@@ -74,8 +75,42 @@ export const NewIngredientForm = (props:IngredientFormProps) => {
             'amount': data.amount
         };
 
+        // add the new ingredient to the databse
         await serverCalls.create(newIngredient)
-        window.location.reload()
+
+        // once the list of ingredients are updated, we will make a get request to spoonacular API to retrieve the recipes that can be made from our ingredients
+        // then we store the response in our store so the "Browse" page doesn't need to make another request to spoonacular API
+
+        // from user's ingredient list database, get all of user's ingredient names and put it into a string
+        ingredientData.forEach((element:any) => {
+            ingredients += ',+' + element.name
+        })
+        ingredients = ingredients.replaceAll(' ', '-').substring(2);
+
+        let response = await getRecipes(ingredients)
+
+        // filter recipes that has 0 ingredient matches
+        let recipes:any = []
+        response.forEach((element:any) => {
+            if (element.usedIngredientCount > 0 && element.usedIngredientCount > element.missedIngredientCount) {
+                recipes.push(element)
+            }
+        })
+
+        // iterate through recipes list and make a get request to spoonacular API to get recipe URL
+        let recipeURLs:any = [];
+        recipes.forEach((element:any) => {
+            let urls = getRecipeURL(element.id)
+            console.log(urls)
+            recipeURLs.push(urls)
+        })
+
+        // set recipes and recipeURLs to our store so we can access this information from different components
+        dispatch(chooseApi1(recipes))
+        dispatch(chooseApi2(recipeURLs))
+
+        console.log(store.getState())
+        //window.location.reload()
     }
 
     return (

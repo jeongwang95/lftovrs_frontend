@@ -72,6 +72,10 @@ p{
     margin-bottom: 1rem;
 }
 
+.body-text a{
+    color: #689780;
+}
+
 .body-text-steps{
     font-weight: normal;
 }

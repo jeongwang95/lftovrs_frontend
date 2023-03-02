@@ -15,10 +15,8 @@ import { styled } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { getAuth, signOut } from 'firebase/auth';
-import { useGetData } from '../../custom-hooks';
 import logo from '../../assets/images/lftovrs_dark.png';
-
-
+import { store } from '../../redux/store';
 
 //Styling:
 
@@ -47,94 +45,75 @@ const FooterLogo = styled("img")({
 })
 // End of Styling
 
+let recipeInfo:any = [];
+store.getState().api1.forEach((element:any) => {
+    let recipe = {
+        'img': element.image,
+        'title': element.title,
+        'used': element.usedIngredientCount,
+        'missed': element.missedIngredientCount
+    }
+    recipeInfo.push(recipe)
+})
+
 const itemData = [
     {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
         title: 'Breakfast',
-        author: '@bkristastucchio',
     },
     {
         img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
         title: 'Burger',
-        author: '@rollelflex_graphy726',
     },
     {
         img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
         title: 'Camera',
-        author: '@helloimnik',
     },
     {
         img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
         title: 'Coffee',
-        author: '@nolanissac',
     },
     {
         img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
         title: 'Hats',
-        author: '@hjrc33',
     },
     {
         img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
         title: 'Honey',
-        author: '@arwinneil',
     },
     {
         img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
         title: 'Basketball',
-        author: '@tjdragotta',
     },
     {
         img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
         title: 'Fern',
-        author: '@katie_wasserman',
     },
     {
         img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
         title: 'Mushrooms',
-        author: '@silverdalex',
     },
     {
         img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
         title: 'Tomato basil',
-        author: '@shelleypauls',
     },
     {
         img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
         title: 'Sea star',
-        author: '@peterlaster',
     },
     {
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         title: 'Bike',
-        author: '@southside_customs',
     },
 ];
-
-let subtitle = 'hello'
 
 export const Browse = () => {
     const navigate = useNavigate();
     const auth = getAuth();
-    let { ingredientData, getData } = useGetData();
-    let ingredients = '';
     
-    // from user's ingredient list database, get all of user's ingredient names and put it into a string
-    ingredientData.forEach((element:any) => {
-        ingredients += ',+' + element.name
-    })
-    ingredients = ingredients.replaceAll(' ', '-').substring(2);
-    console.log(ingredients)
-    
-    // the string "ingredients" will be used as a parameter for spoonacular get recipes by ingredients API call
-    
-
-    // let recipies = [];
-    // recipeData.forEach((element:any) => {
-    //     if (element.usedIngredientCount > 0) {
-    //         let response = getRecipeURLById(element.id)
-    //         console.log(response)
-    //     }
-    // })
+    console.log(store.getState().api1);
+    console.log(store.getState().api2);
+    console.log(recipeInfo)
 
     const logOut = async () => {
         await signOut(auth);
@@ -164,10 +143,8 @@ export const Browse = () => {
 
             <Box sx={{margin: '2.5rem 5rem 5rem 5rem'}}>
                 <h1 style={{marginBottom: '2.5rem'}}>Browse Recipes</h1>
-                <ImageList sx={{ width: 'inherit', height: '60rem' }}>
-                    <ImageListItem key="Subheader" cols={4}>
-                    </ImageListItem>
-                    {itemData.map((item) => (
+                <ImageList sx={{ width: 'inherit' }} cols={4}>
+                    {itemData.map((item:any) => (
                         <ImageListItem key={item.img}>
                         <img
                             src={`${item.img}?w=450&h=450&fit=crop&auto=format`}
@@ -177,14 +154,15 @@ export const Browse = () => {
                         />
                         <ImageListItemBar
                             title={item.title}
-                            subtitle={subtitle}
+                            subtitle={`hello`}
                             actionIcon={
-                            <IconButton
-                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                aria-label={`info about ${item.title}`}
-                            >
-                                <InfoIcon onClick={()=> window.open('https://stackoverflow.com/')} />
-                            </IconButton>
+                                <IconButton
+                                    onClick={()=> window.open('https://stackoverflow.com/')}
+                                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                    aria-label={`info about ${item.title}`}
+                                >
+                                    <InfoIcon />
+                                </IconButton>
                             }
                         />
                         </ImageListItem>

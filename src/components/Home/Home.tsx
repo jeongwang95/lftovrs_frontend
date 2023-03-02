@@ -129,15 +129,18 @@ export const Home = ( props:Props) => {
                         <BodyImg src={`${bodyImg1}`} />
                         <h3 className='body-text body-text-steps' style={{color: '#689780'}}>Step 1:</h3>
                         <h2 className='body-text'>Add your leftover ingredients.</h2>
-                        <p className='body-text'>You can add any leftover ingredients you have in your home, and delete them once you used them. To update your leftover ingredients list, click "Edit List". 
-                            Once you have entered all of your ingredients, click "Browse" on the top right corner of the page to browse recipes.</p>
+                        <p className='body-text'>You can add any leftover ingredients you have in your home with the "Add" button. Update the ingredient amount with the "Update" button.
+                            And once you used up all of the ingredient(s), you can select all of the ingredient you want to remove and press "Remove". Lftovrs ignores typical pantry items, such as water, salt, flour, oil, etc, 
+                            when browsing for recipes, so you don't have to add them to your list (view full pantry list <a href='https://spoonacular.com/food-api/docs#List-of-Ingredients' target='_blank'>here</a>).
+                            Below the ingredients table, you quickly view 4 recipes you can make with your ingredients, or click "Browse" on the top right corner to browse all options. </p>
                     </div>
                     <div className="body">
                         <BodyImg src={`${bodyImg2}`} />
                         <h3 className='body-text body-text-steps' style={{color: '#689780'}}>Step 2:</h3>
                         <h2 className='body-text'>Browse recipes.</h2>
-                        <p className='body-text'>In the browse section, you can view all of the recipes you can make with your ingredients. Sometimes, you won't have every ingredients you need for a recipe, but fear not! 
-                            The browse page will still show recipes that has the highest ingredients match, so you can decide if the recipes is still doable with missing ingredients.</p>
+                        <p className='body-text'>In the browse section, you can view all of the recipes you can make with your ingredients. Click the "i" icon to view recipe instructions. 
+                            Sometimes, you won't have every ingredients you need for a recipe, but no need to worry. The browse page will still show recipes that has the highest ingredients match, 
+                            so you can decide if the recipes is still doable with missing ingredients. You can view the number of ingredients matched and the number of missing ingredients below the recipe name.</p>
                     </div>
                 </BodyContainer>
             </div>

@@ -1,31 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface IngredientState {
-    name: string,
-    category: string,
-    amount: string
+    api1: any,
+    api2: any
 }
 
 const initialState: IngredientState = {
-    name: '',
-    category: '',
-    amount: ''
+    api1: [],
+    api2: []
 }
 
 const rootSlice = createSlice({
     name: "root",
     initialState,
     reducers: {
-        chooseName: (state, action) => { state.name = action.payload },
-        chooseCategory: (state, action) => { state.category = action.payload },
-        chooseAmount: (state, action) => { state.amount = action.payload }
+        chooseApi1: (state, action) => { state.api1 = action.payload },
+        chooseApi2: (state, action) => { state.api2 = action.payload },
     }
 })
 
 // Export Reducer
 export const reducer = rootSlice.reducer;
 export const {
-    chooseName,
-    chooseCategory,
-    chooseAmount
+    chooseApi1,
+    chooseApi2
 } = rootSlice.actions;
