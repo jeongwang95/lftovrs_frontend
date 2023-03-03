@@ -91,7 +91,7 @@ export const SignUpForm = (props: userProps) => {
         console.log(data.password)
         console.log(data.confirmPassword)
 
-        if (!data.password || !data.email) {
+        if (!data.password || !data.email || !data.confirmPassword) {
             document.querySelector<any>('.error').innerHTML = 'please fill in missing information'
         } else if (data.password != data.confirmPassword) {
             document.querySelector<any>('.error').innerHTML = 'password and confirmation password does not match'
